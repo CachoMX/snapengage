@@ -7,7 +7,7 @@
 
 // Configuration
 $config = [
-    'api_key' => 'a2b945fb-b46d-4897-94a5-4932ef96fe3e',
+    'api_key' => 'xxxx-xxxxx-xxxx-xxxx',
     'default_widget_id' => null,
     'allowed_domains' => [],
     'cache_timeout' => 300,
