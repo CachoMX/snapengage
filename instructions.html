@@ -1,0 +1,263 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>✅ WORKING: SnapEngage + Hyros Implementation Guide</title>
+  <style>
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      line-height: 1.6;
+      margin: 0;
+      padding: 20px;
+      background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+      min-height: 100vh;
+    }
+    .container {
+      max-width: 1000px;
+      margin: 0 auto;
+      background: white;
+      padding: 40px;
+      border-radius: 15px;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+    }
+    .success-banner {
+      background: linear-gradient(135deg, #28a745, #20c997);
+      color: white;
+      padding: 30px;
+      border-radius: 10px;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+    .code {
+      background: #2d3748;
+      color: #e2e8f0;
+      padding: 20px;
+      border-radius: 8px;
+      overflow-x: auto;
+      font-family: 'Monaco', 'Menlo', monospace;
+      font-size: 14px;
+      margin: 15px 0;
+      border-left: 4px solid #28a745;
+    }
+    .step {
+      background: #f8f9fa;
+      border: 2px solid #28a745;
+      border-radius: 10px;
+      padding: 25px;
+      margin: 25px 0;
+    }
+    .alert {
+      padding: 20px;
+      border-radius: 8px;
+      margin: 20px 0;
+    }
+    .success {
+      background: #d4edda;
+      border: 2px solid #c3e6cb;
+      color: #155724;
+    }
+    .info {
+      background: #d1ecf1;
+      border: 2px solid #bee5eb;
+      color: #0c5460;
+    }
+    .warning {
+      background: #fff3cd;
+      border: 2px solid #ffeaa7;
+      color: #856404;
+    }
+    h1, h2, h3 {
+      color: #2d3748;
+    }
+    .highlight {
+      background: #fff3cd;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-weight: bold;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <div class="success-banner">
+      <h1>🎉 SOLUTION CONFIRMED WORKING!</h1>
+      <p style="font-size: 1.2em; margin: 0;">Enhanced Hyros email detection is successfully triggering <span style="background: rgba(255,255,255,0.2); padding: 4px 8px; border-radius: 4px;">[UTS] [hte]</span></p>
+    </div>
+
+    <h2>📋 Client Implementation (FINAL VERSION)</h2>
+
+    <div class="step">
+      <h3>🎯 Step 1: Replace Their Existing Chat Code</h3>
+      <p>Clients should remove any existing chat widgets and replace with this code. Add it before the closing <code>&lt;/body&gt;</code> tag:</p>
+      
+      <div class="code">
+&lt;!-- Existing Hyros Script (keep as-is) --&gt;
+&lt;script&gt;
+var head = document.head;
+var script = document.createElement('script');
+script.type = 'text/javascript';
+script.src = "https://t.partygo.mx/v1/lst/universal-script?ph=<span class="highlight">THEIR-HYROS-PIXEL-ID</span>&tag=!clicked&ref_url=" + encodeURI(document.URL);
+head.appendChild(script);
+&lt;/script&gt;
+
+&lt;!-- Enhanced SnapEngage Chat with Hyros Email Detection --&gt;
+&lt;script src="https://callwithcarlos.com/snapengage/chat.php?hyros=true"&gt;&lt;/script&gt;
+      </div>
+      
+      <p><strong>That's it!</strong> Just replace <span class="highlight">THEIR-HYROS-PIXEL-ID</span> with their actual Hyros pixel ID.</p>
+    </div>
+
+    <div class="step">
+      <h3>✅ Step 2: Test & Verify</h3>
+      <p>After implementation, clients can verify it's working by:</p>
+      <ol>
+        <li>Open browser developer tools (F12)</li>
+        <li>Go to Console tab</li>
+        <li>Start a chat and enter an email</li>
+        <li>Look for <span class="highlight">[UTS] [hte]</span> in the console</li>
+        <li>Check their Hyros dashboard for new leads</li>
+      </ol>
+    </div>
+
+    <div class="alert success">
+      <h3>🎯 What This Achieves:</h3>
+      <ul>
+        <li>✅ <strong>Hyros email detection works</strong> - Shows <code>[UTS] [hte]</code> in console</li>
+        <li>✅ <strong>Proper attribution</strong> - Leads attributed to correct page/campaign</li>
+        <li>✅ <strong>Automatic tracking</strong> - No manual steps required</li>
+        <li>✅ <strong>Real-time updates</strong> - Leads appear immediately in Hyros</li>
+        <li>✅ <strong>Full chat functionality</strong> - All SnapEngage features work</li>
+      </ul>
+    </div>
+
+    <h2>🚀 Advanced Options for Clients</h2>
+
+    <div class="step">
+      <h3>🎨 Custom Themes</h3>
+      <p>For minimal/custom chat appearance:</p>
+      <div class="code">
+&lt;script src="https://callwithcarlos.com/snapengage/chat.php?hyros=true&theme=minimal"&gt;&lt;/script&gt;
+      </div>
+    </div>
+
+    <div class="step">
+      <h3>📧 Pre-fill User Information</h3>
+      <p>If client knows user email/name from login:</p>
+      <div class="code">
+&lt;script&gt;
+// Get user info from your system
+var userEmail = 'user@example.com'; // From your login system
+var userName = 'John Doe'; // From your login system
+
+// Load chat with pre-filled info
+var chatUrl = 'https://callwithcarlos.com/snapengage/chat.php?hyros=true';
+chatUrl += '&email=' + encodeURIComponent(userEmail);
+chatUrl += '&name=' + encodeURIComponent(userName);
+
+var script = document.createElement('script');
+script.src = chatUrl;
+document.head.appendChild(script);
+&lt;/script&gt;
+      </div>
+    </div>
+
+    <div class="step">
+      <h3>🌍 Multi-language Support</h3>
+      <div class="code">
+&lt;script src="https://callwithcarlos.com/snapengage/chat.php?hyros=true&lang=es"&gt;&lt;/script&gt;
+&lt;!-- Supported: en, es, fr, de, pt, it, etc. --&gt;
+      </div>
+    </div>
+
+    <div class="step">
+      <h3>🔧 Debug Mode (for testing)</h3>
+      <div class="code">
+&lt;script src="https://callwithcarlos.com/snapengage/chat.php?hyros=true&debug=true"&gt;&lt;/script&gt;
+      </div>
+      <p>Shows detailed console logs for troubleshooting.</p>
+    </div>
+
+    <h2>📊 WordPress Integration</h2>
+
+    <div class="step">
+      <h3>🔌 WordPress Setup</h3>
+      <p>For WordPress sites, add this to <code>functions.php</code>:</p>
+      
+      <div class="code">
+function add_enhanced_snapengage_chat() {
+    // Get current user info if logged in
+    $current_user = wp_get_current_user();
+    $email = $current_user->user_email;
+    $name = $current_user->display_name;
+    
+    // Build chat URL
+    $chat_url = 'https://callwithcarlos.com/snapengage/chat.php?hyros=true';
+    if ($email) {
+        $chat_url .= '&email=' . urlencode($email) . '&name=' . urlencode($name);
+    }
+    
+    // Add Hyros script first (replace with client's pixel ID)
+    echo '&lt;script&gt;
+    var head = document.head;
+    var script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://t.partygo.mx/v1/lst/universal-script?ph=CLIENT-PIXEL-ID&tag=!clicked&ref_url=" + encodeURI(document.URL);
+    head.appendChild(script);
+    &lt;/script&gt;';
+    
+    // Add enhanced chat
+    echo '&lt;script src="' . esc_url($chat_url) . '"&gt;&lt;/script&gt;';
+}
+add_action('wp_footer', 'add_enhanced_snapengage_chat');
+      </div>
+    </div>
+
+    <h2>🎯 Client Checklist</h2>
+
+    <div class="alert info">
+      <h3>✅ Implementation Checklist:</h3>
+      <ul>
+        <li>□ Replace existing chat code with new enhanced version</li>
+        <li>□ Update Hyros pixel ID in the script</li>
+        <li>□ Test chat functionality on their website</li>
+        <li>□ Verify <code>[UTS] [hte]</code> appears in console</li>
+        <li>□ Check Hyros dashboard for test leads</li>
+        <li>□ Remove debug mode for production (remove <code>&debug=true</code>)</li>
+        <li>□ Test on mobile devices</li>
+        <li>□ Verify with different email addresses</li>
+      </ul>
+    </div>
+
+    <div class="alert warning">
+      <h3>⚠️ Important Notes:</h3>
+      <ul>
+        <li>Only use <strong>one chat solution</strong> per page (remove old widgets)</li>
+        <li>Make sure to use their <strong>actual Hyros pixel ID</strong></li>
+        <li>Test thoroughly before going live</li>
+        <li>The hidden email detection method is invisible to users</li>
+      </ul>
+    </div>
+
+    <h2>📞 Support & Troubleshooting</h2>
+
+    <div class="step">
+      <h3>🔍 If It's Not Working:</h3>
+      <ol>
+        <li>Check browser console for error messages</li>
+        <li>Verify Hyros pixel ID is correct</li>
+        <li>Test with <code>?debug=true</code> added to URL</li>
+        <li>Make sure no other chat widgets are conflicting</li>
+        <li>Clear browser cache and test again</li>
+      </ol>
+      
+      <p><strong>For technical support:</strong> Contact with console logs and specific error messages.</p>
+    </div>
+
+    <div class="success-banner" style="margin-top: 40px;">
+      <h2>🎉 Congratulations!</h2>
+      <p>Your enhanced SnapEngage + Hyros integration is now complete and verified working. Clients can implement this immediately and start seeing properly attributed chat leads in their Hyros dashboard.</p>
+    </div>
+  </div>
+</body>
+</html>
