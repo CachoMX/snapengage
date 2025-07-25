@@ -1,13 +1,13 @@
 <?php
 /**
- * SnapEngage + Hyros Integration with Email Detection Trigger
+ * REALISTIC TYPING: SnapEngage + Hyros - Mimics Real User Email Input
  * 
- * This version properly triggers Hyros email detection
+ * This version simulates exactly how a real user types an email
  */
 
 // Configuration
 $config = [
-    'api_key' => 'a2b945fb-b46d-4897-94a5-4932ef96fe3e', // Replace with your actual SnapEngage API key
+    'api_key' => 'a2b945fb-b46d-4897-94a5-4932ef96fe3e',
     'default_widget_id' => null,
     'allowed_domains' => [],
     'cache_timeout' => 300,
@@ -68,10 +68,8 @@ function isWidgetOnline($widgetId, $cacheTimeout = 300) {
 $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
 ?>
 /*!
- * SnapEngage + Hyros Integration with Email Detection Trigger
+ * REALISTIC TYPING: SnapEngage + Hyros - Mimics Real User Email Input
  * Generated: <?php echo date('c'); ?>
-
- * SOLUTION: Creates hidden email input that Hyros can detect
  */
 
 (function() {
@@ -91,13 +89,17 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
         hyrosPixelId: '<?php echo $config['hyros_pixel_id']; ?>'
     };
     
+    // Track processed emails to prevent loops
+    var processedEmails = new Set();
+    var isSimulatingTyping = false;
+    
     function debugLog(message, data) {
         if (config.debug && typeof console !== 'undefined') {
-            console.log('[SnapEngage-Hyros] ' + message, data || '');
+            console.log('[SnapEngage-Realistic] ' + message, data || '');
         }
     }
     
-    debugLog('🎯 SOLUTION: Initializing SnapEngage with Hyros Email Detection Trigger', config);
+    debugLog('🎯 REALISTIC: Loading SnapEngage with realistic typing simulation', config);
     
     if (window.SnapEngageIntegrationLoaded) {
         debugLog('Already loaded, skipping...');
@@ -105,13 +107,12 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
     }
     window.SnapEngageIntegrationLoaded = true;
     
-    // SOLUTION: Create hidden email input that Hyros can detect
-    function createHyrosEmailTrigger() {
+    // Create hidden input for Hyros detection
+    function createHyrosEmailInput() {
         if (!config.hyrosIntegration) return;
         
-        debugLog('🎯 Creating hidden email input for Hyros detection');
+        debugLog('🎯 Creating realistic email input for Hyros detection');
         
-        // Create hidden form that Hyros can monitor
         var hiddenForm = document.createElement('form');
         hiddenForm.style.cssText = 'position: absolute; left: -9999px; opacity: 0; pointer-events: none; height: 1px; width: 1px; overflow: hidden;';
         hiddenForm.id = 'hyros-email-trigger-form';
@@ -122,127 +123,169 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
         hiddenEmailInput.id = 'hyros-email-trigger-input';
         hiddenEmailInput.placeholder = 'email@example.com';
         hiddenEmailInput.style.cssText = 'width: 1px; height: 1px; opacity: 0;';
+        hiddenEmailInput.setAttribute('data-hyros-input', 'true');
         
         hiddenForm.appendChild(hiddenEmailInput);
         
-        // Add to page when DOM is ready
         if (document.readyState === 'loading') {
             document.addEventListener('DOMContentLoaded', function() {
                 document.body.appendChild(hiddenForm);
-                debugLog('✅ Hidden email input added to page for Hyros');
+                debugLog('✅ Realistic email input created');
             });
         } else {
             document.body.appendChild(hiddenForm);
-            debugLog('✅ Hidden email input added to page for Hyros');
+            debugLog('✅ Realistic email input created');
         }
         
         return hiddenEmailInput;
     }
     
-    // SOLUTION: Trigger Hyros email detection when chat email is captured
-    function triggerHyrosEmailDetection(email) {
-        if (!config.hyrosIntegration || !email) return;
+    // REALISTIC: Simulate real user typing behavior
+    function simulateRealisticTyping(email) {
+        if (!config.hyrosIntegration || !email || isSimulatingTyping) return;
         
-        debugLog('🎯 TRIGGERING: Hyros email detection for: ' + email);
+        var emailKey = email.toLowerCase().trim();
+        
+        // Skip invalid emails
+        if (emailKey.includes('fromwsdsdsd') || 
+            emailKey.includes('dddddd') || 
+            emailKey.length > 100 ||
+            emailKey.length < 5 ||
+            !emailKey.includes('@') ||
+            !emailKey.includes('.')) {
+            debugLog('⚠️ REALISTIC: Invalid email, skipping: ' + email);
+            return;
+        }
+        
+        // Skip if already processed
+        if (processedEmails.has(emailKey)) {
+            debugLog('⚠️ REALISTIC: Email already processed, skipping: ' + email);
+            return;
+        }
+        
+        debugLog('🎯 REALISTIC: Starting realistic typing simulation for: ' + email);
+        
+        isSimulatingTyping = true;
+        processedEmails.add(emailKey);
+        
+        var hiddenInput = document.getElementById('hyros-email-trigger-input');
+        if (!hiddenInput) {
+            debugLog('❌ REALISTIC: Hidden input not found');
+            isSimulatingTyping = false;
+            return;
+        }
         
         try {
-            // Method 1: Fill hidden input and trigger events
-            var hiddenInput = document.getElementById('hyros-email-trigger-input');
-            if (hiddenInput) {
-                debugLog('📧 Filling hidden email input');
-                
-                // Set the value
-                hiddenInput.value = email;
-                
-                // Trigger all the events Hyros might be listening for
-                var events = ['input', 'change', 'keyup', 'keydown', 'blur', 'focus'];
-                events.forEach(function(eventType) {
-                    var event = new Event(eventType, { bubbles: true, cancelable: true });
-                    hiddenInput.dispatchEvent(event);
-                });
-                
-                // Special keyup event with email-like typing
-                setTimeout(function() {
-                    hiddenInput.focus();
+            // Step 1: Focus the input (user clicks)
+            debugLog('🎯 REALISTIC: Step 1 - Focus input');
+            hiddenInput.focus();
+            
+            // Step 2: Clear any existing value
+            hiddenInput.value = '';
+            
+            // Step 3: Simulate typing each character with realistic timing
+            var characters = email.split('');
+            var currentValue = '';
+            
+            function typeNextCharacter(index) {
+                if (index >= characters.length) {
+                    // Typing complete - trigger final events
                     setTimeout(function() {
-                        hiddenInput.blur();
-                        debugLog('🎯 Triggered focus/blur events on hidden email input');
-                    }, 100);
-                }, 50);
+                        debugLog('🎯 REALISTIC: Step 4 - Typing complete, triggering final events');
+                        
+                        // Final input event
+                        var inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                        hiddenInput.dispatchEvent(inputEvent);
+                        
+                        // Change event
+                        setTimeout(function() {
+                            var changeEvent = new Event('change', { bubbles: true, cancelable: true });
+                            hiddenInput.dispatchEvent(changeEvent);
+                            
+                            // Final blur (user finished typing)
+                            setTimeout(function() {
+                                hiddenInput.blur();
+                                debugLog('🎯 REALISTIC: Step 5 - Blur (user finished)');
+                                
+                                // Reset simulation lock
+                                setTimeout(function() {
+                                    isSimulatingTyping = false;
+                                    debugLog('✅ REALISTIC: Typing simulation complete');
+                                }, 1000);
+                            }, 200);
+                        }, 100);
+                    }, 300);
+                    return;
+                }
                 
-                debugLog('✅ Triggered all email events on hidden input');
+                // Add next character
+                currentValue += characters[index];
+                hiddenInput.value = currentValue;
+                
+                // Trigger keydown
+                var keydownEvent = new KeyboardEvent('keydown', {
+                    key: characters[index],
+                    code: 'Key' + characters[index].toUpperCase(),
+                    bubbles: true,
+                    cancelable: true
+                });
+                hiddenInput.dispatchEvent(keydownEvent);
+                
+                // Trigger input event
+                var inputEvent = new Event('input', { bubbles: true, cancelable: true });
+                hiddenInput.dispatchEvent(inputEvent);
+                
+                // Trigger keyup
+                var keyupEvent = new KeyboardEvent('keyup', {
+                    key: characters[index],
+                    code: 'Key' + characters[index].toUpperCase(),
+                    bubbles: true,
+                    cancelable: true
+                });
+                hiddenInput.dispatchEvent(keyupEvent);
+                
+                debugLog('🎯 REALISTIC: Typed "' + characters[index] + '" (current: "' + currentValue + '")');
+                
+                // Continue with next character after realistic delay
+                var delay = Math.random() * 150 + 50; // 50-200ms between keystrokes
+                setTimeout(function() {
+                    typeNextCharacter(index + 1);
+                }, delay);
             }
             
-            // Method 2: Try to call Hyros directly if available
-            if (typeof window.hyros !== 'undefined' && window.hyros.trackEmail) {
-                try {
-                    window.hyros.trackEmail(email);
-                    debugLog('✅ Called hyros.trackEmail() directly');
-                } catch (e) {
-                    debugLog('⚠️ hyros.trackEmail() failed: ' + e.message);
-                }
-            }
-            
-            // Method 3: Try UTS (Universal Tracking Script) direct call
-            if (typeof window.UTS !== 'undefined' && window.UTS.trackEmail) {
-                try {
-                    window.UTS.trackEmail(email);
-                    debugLog('✅ Called UTS.trackEmail() directly');
-                } catch (e) {
-                    debugLog('⚠️ UTS.trackEmail() failed: ' + e.message);
-                }
-            }
-            
-            // Method 4: Dispatch custom event
-            var customEvent = new CustomEvent('hyros_email_detected', {
-                detail: { email: email, source: 'snapengage_chat' }
-            });
-            document.dispatchEvent(customEvent);
-            debugLog('✅ Dispatched custom hyros_email_detected event');
-            
-            // Method 5: Try postMessage to any Hyros frames
-            var frames = document.querySelectorAll('iframe');
-            frames.forEach(function(frame) {
-                try {
-                    frame.contentWindow.postMessage({
-                        type: 'HYROS_EMAIL_DETECTED',
-                        email: email,
-                        source: 'snapengage_chat'
-                    }, '*');
-                } catch (e) {
-                    // Ignore cross-origin errors
-                }
-            });
-            
-            debugLog('🎯 All Hyros email detection methods triggered');
+            // Start typing simulation after focus
+            setTimeout(function() {
+                debugLog('🎯 REALISTIC: Step 3 - Starting character-by-character typing');
+                typeNextCharacter(0);
+            }, 100);
             
         } catch (error) {
-            debugLog('❌ Error triggering Hyros email detection: ' + error.message);
+            debugLog('❌ REALISTIC: Error in typing simulation: ' + error.message);
+            isSimulatingTyping = false;
         }
     }
     
-    // Enhanced email tracking with Hyros trigger
+    // Send email to Hyros with tracking
     function sendEmailToHyros(email, eventType, additionalData) {
         if (!config.hyrosIntegration || !email) return;
         
-        debugLog('🎯 ENHANCED: Processing email for Hyros', {
+        debugLog('🎯 REALISTIC: Processing email for Hyros', {
             email: email, 
             eventType: eventType, 
             additionalData: additionalData
         });
         
-        // FIRST: Trigger Hyros email detection
-        triggerHyrosEmailDetection(email);
+        // Start realistic typing simulation
+        simulateRealisticTyping(email);
         
-        // Wait a moment for Hyros to detect the email, then send the event
+        // Send tracking pixel after typing simulation
         setTimeout(function() {
             try {
-                // Send pixel with email
                 var pixelUrl = 'https://t.partygo.mx/v1/lst/universal-script';
                 pixelUrl += '?ph=' + encodeURIComponent(config.hyrosPixelId);
                 pixelUrl += '&email=' + encodeURIComponent(email);
                 pixelUrl += '&event=' + encodeURIComponent(eventType);
-                pixelUrl += '&source=snapengage_chat_triggered';
+                pixelUrl += '&source=snapengage_realistic';
                 pixelUrl += '&ref_url=' + encodeURIComponent(window.location.href);
                 pixelUrl += '&ts=' + Date.now();
                 
@@ -255,23 +298,22 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
                     }
                 }
                 
-                debugLog('🎯 Enhanced Pixel URL: ' + pixelUrl);
+                debugLog('🎯 Realistic Pixel URL: ' + pixelUrl);
                 
-                // Create tracking pixel
                 var img = document.createElement('img');
                 img.style.display = 'none';
                 img.style.position = 'absolute';
                 img.style.left = '-9999px';
                 
                 img.onload = function() {
-                    debugLog('✅ Enhanced Hyros pixel loaded successfully');
+                    debugLog('✅ Realistic Hyros pixel loaded successfully');
                     setTimeout(function() {
                         if (img.parentNode) img.parentNode.removeChild(img);
                     }, 2000);
                 };
                 
                 img.onerror = function() {
-                    debugLog('❌ Enhanced Hyros pixel failed to load');
+                    debugLog('❌ Realistic Hyros pixel failed to load');
                     setTimeout(function() {
                         if (img.parentNode) img.parentNode.removeChild(img);
                     }, 2000);
@@ -280,25 +322,15 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
                 img.src = pixelUrl;
                 document.body.appendChild(img);
                 
-                // Backup fetch call
-                fetch(pixelUrl, { mode: 'no-cors' })
-                    .then(function() {
-                        debugLog('✅ Enhanced fetch backup completed');
-                    })
-                    .catch(function(error) {
-                        debugLog('⚠️ Enhanced fetch backup failed: ' + error.message);
-                    });
-                
             } catch (error) {
-                debugLog('❌ Error in enhanced email tracking: ' + error.message);
+                debugLog('❌ Error in realistic email tracking: ' + error.message);
             }
-        }, 500); // Wait 500ms for email detection to register
+        }, 3000); // Wait for typing simulation to complete
     }
     
-    // Initialize hidden email input
-    createHyrosEmailTrigger();
+    // Initialize
+    createHyrosEmailInput();
     
-    // Add status indicator if requested
     if (config.showStatus) {
         addStatusIndicator();
     }
@@ -307,9 +339,9 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
     
     function addStatusIndicator() {
         var statusDiv = document.createElement('div');
-        statusDiv.id = 'snapengage-status-hyros-enhanced';
+        statusDiv.id = 'snapengage-status-realistic';
         statusDiv.innerHTML = config.isOnline ? 
-            '<span style="color: #28a745;">● Chat Online + Enhanced Hyros Detection</span>' : 
+            '<span style="color: #28a745;">● Chat Online + Realistic Typing Detection</span>' : 
             '<span style="color: #dc3545;">● Chat Offline</span>';
         
         statusDiv.style.cssText = 'position: fixed; top: 10px; right: 10px; background: rgba(255,255,255,0.95); padding: 8px 12px; border: 1px solid #dee2e6; border-radius: 20px; z-index: 10000; font-size: 12px; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; box-shadow: 0 2px 8px rgba(0,0,0,0.1);';
@@ -367,7 +399,7 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
             return;
         }
         
-        debugLog('Configuring SnapEngage with enhanced Hyros integration');
+        debugLog('Configuring SnapEngage with REALISTIC typing simulation');
         
         try {
             if (config.widgetId) {
@@ -380,8 +412,8 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
             
             if (config.userEmail) {
                 SnapEngage.setUserEmail(config.userEmail);
-                // Immediately trigger Hyros detection for pre-filled email
-                triggerHyrosEmailDetection(config.userEmail);
+                // Trigger realistic typing for pre-filled email
+                simulateRealisticTyping(config.userEmail);
             }
             
             if (config.userName) {
@@ -394,7 +426,7 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
             setupEventHandlers();
             applyTheme(config.theme);
             
-            debugLog('✅ SnapEngage configured with enhanced Hyros integration');
+            debugLog('✅ SnapEngage configured with REALISTIC typing simulation');
             
         } catch (error) {
             debugLog('❌ Error configuring SnapEngage: ' + error.message);
@@ -402,17 +434,18 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
     }
     
     function setupEventHandlers() {
-        debugLog('Setting up enhanced event handlers for Hyros email detection');
+        debugLog('Setting up REALISTIC event handlers');
         
+        // Primary chat start handler
         SnapEngage.setCallback('StartChat', function(email, msg, type) {
-            debugLog('🎉 Chat started - ENHANCED Hyros email detection', {
+            debugLog('🎉 Chat started - REALISTIC typing simulation', {
                 email: email, 
                 message: msg, 
                 type: type
             });
             
             if (config.hyrosIntegration && email && email.trim()) {
-                debugLog('📧 Email detected, triggering ENHANCED Hyros detection: ' + email);
+                debugLog('📧 Valid email detected, starting REALISTIC typing: ' + email);
                 
                 sendEmailToHyros(email, 'chat_started', {
                     chat_type: type,
@@ -423,7 +456,7 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
                     timestamp: new Date().toISOString()
                 });
             } else {
-                debugLog('⚠️ No email provided or Hyros disabled - no tracking');
+                debugLog('⚠️ No valid email provided - no realistic typing');
             }
             
             if (typeof gtag !== 'undefined') {
@@ -438,6 +471,29 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
             }
         });
         
+        // Monitor SnapEngage's setUserEmail
+        if (SnapEngage.setUserEmail) {
+            var originalSetUserEmail = SnapEngage.setUserEmail;
+            SnapEngage.setUserEmail = function(email) {
+                debugLog('📧 REALISTIC: SnapEngage.setUserEmail called with: ' + email);
+                
+                var result = originalSetUserEmail.call(this, email);
+                
+                if (config.hyrosIntegration && email && email.trim()) {
+                    var emailKey = email.toLowerCase().trim();
+                    if (!processedEmails.has(emailKey)) {
+                        debugLog('🎯 REALISTIC: New email via setUserEmail, starting typing: ' + email);
+                        setTimeout(function() {
+                            simulateRealisticTyping(email);
+                        }, 500);
+                    }
+                }
+                
+                return result;
+            };
+        }
+        
+        // Other standard callbacks
         SnapEngage.setCallback('ChatMessageReceived', function(agent, msg) {
             debugLog('Message received from: ' + agent);
             if (typeof window.onSnapEngageMessageReceived === 'function') {
@@ -466,11 +522,11 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
             
             var trigger = document.createElement('div');
             trigger.innerHTML = '💬';
-            trigger.title = 'Start Chat - Enhanced Hyros Email Detection';
+            trigger.title = 'Start Chat - Realistic Typing Detection';
             trigger.style.cssText = 'position: fixed; bottom: 20px; right: 20px; width: 60px; height: 60px; background: linear-gradient(135deg, #007cba, #005a8b); color: white; border-radius: 50%; text-align: center; line-height: 60px; cursor: pointer; z-index: 9999; font-size: 24px; box-shadow: 0 4px 20px rgba(0,124,186,0.3); transition: all 0.3s ease;';
             
             trigger.onclick = function() {
-                debugLog('Custom trigger clicked - enhanced Hyros detection ready');
+                debugLog('Custom trigger clicked - realistic typing ready');
                 SnapEngage.startLink();
             };
             
@@ -484,10 +540,10 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
         }
     }
     
-    // Enhanced utility functions
+    // Utility functions
     window.SnapEngageUtils = {
         openChat: function(message) {
-            debugLog('Opening chat with enhanced Hyros email detection');
+            debugLog('Opening chat with realistic typing detection');
             if (typeof SnapEngage !== 'undefined') {
                 if (message) {
                     SnapEngage.startChat(message);
@@ -498,13 +554,13 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
         },
         
         triggerHyrosEmail: function(email) {
-            triggerHyrosEmailDetection(email);
+            simulateRealisticTyping(email);
         },
         
         testHyrosDetection: function(email) {
-            email = email || 'test-enhanced-' + Date.now() + '@example.com';
-            debugLog('🧪 Testing enhanced Hyros email detection with: ' + email);
-            triggerHyrosEmailDetection(email);
+            email = email || 'test-realistic-' + Date.now() + '@example.com';
+            debugLog('🧪 Testing realistic typing detection with: ' + email);
+            simulateRealisticTyping(email);
             return email;
         },
         
@@ -512,9 +568,19 @@ $isOnline = isWidgetOnline($widgetId, $config['cache_timeout']);
             return typeof SnapEngage !== 'undefined';
         },
         
-        config: config
+        config: config,
+        
+        getProcessedEmails: function() {
+            return Array.from(processedEmails);
+        },
+        
+        resetProcessedEmails: function() {
+            processedEmails.clear();
+            isSimulatingTyping = false;
+            debugLog('🔄 Reset processed emails cache');
+        }
     };
     
-    debugLog('✅ Enhanced SnapEngage + Hyros email detection integration complete');
+    debugLog('✅ REALISTIC SnapEngage + Hyros typing simulation integration complete');
     
 })();
